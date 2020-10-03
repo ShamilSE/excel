@@ -1,0 +1,28 @@
+{
+  "name": "excel",
+  "version": "1.0.0",
+  "description": "JavaScript Excel",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShamilSE/excel.git"
+  },
+  "keywords": [
+    "JS",
+    "Excel"
+  ],
+  "author": "Shamil Salakhutdinov <ishamil86@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShamilSE/excel/issues"
+  },
+  "homepage": "https://github.com/ShamilSE/excel#readme",
+  "devDependencies": {
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  }
+}
