@@ -1,19 +1,17 @@
-import {$} from "@core/dom";
+import {$} from '@core/dom'
 
 export class Excel {
     constructor(selector, options) {
-        this.$el = document.querySelector(selector)
+        this.$el = $(selector)
         this.components = options.components || []
     }
 
     getRoot() {
-        // создаем корневой див
         const $root = $.create('div', 'excel')
         this.components.forEach(Component => {
             const $el = $.create('div', Component.className)
-            // добавляем елемент в корневой див
             const component = new Component($el)
-            $el.innerHTML = component.toHTML()
+            $el.html(component.toHTML())
             $root.append($el)
         })
 
@@ -22,6 +20,5 @@ export class Excel {
 
     render() {
         this.$el.append(this.getRoot())
-        console.log(this.components)
     }
 }
