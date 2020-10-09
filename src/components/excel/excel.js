@@ -20,7 +20,9 @@ export class Excel {
     }
 
     render() {
+        // инициализация html
         this.$el.append(this.getRoot())
+        // инициализация слушателей
         this.components.forEach(component => component.init())
     }
 }

@@ -1,3 +1,5 @@
+import {getMethodName} from "@core/getMethodName";
+
 export class DomListener {
     constructor($root, listeners = []) {
         if (!$root) {
@@ -8,8 +10,16 @@ export class DomListener {
     }
 
     initDomListeners() {
-        console.log(this.listeners)
+        this.listeners.forEach(listener => {
+            const method = getMethodName(listener)
+            this[method] = this[method].bind(this)
+            this.$root.on(listener, this[method])
+        })
     }
 
-    removeDomListeners() {}
+    removeDomListeners() {
+        this.listeners.forEach(listener => {
+            this.$root.remove(listener, this[getMethodName(listener)].bind(this))
+        })
+    }
 }
