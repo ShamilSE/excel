@@ -11,11 +11,11 @@ function createCell() {
 
 function createColumn(columns) {
     return `
+
         <div class="column">
             ${columns}
             <div class="col-resize"></div>
         </div>
-
     `
 }
 
