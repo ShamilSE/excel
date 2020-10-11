@@ -67,6 +67,7 @@
   }
 
   .col-resize, .row-resize {
+    z-index: 1000;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -74,7 +75,7 @@
     opacity: 0;
 
     &:hover {
-      opacity: 1;
+      opacity: 1!important;
     }
   }
 

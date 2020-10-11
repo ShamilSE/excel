@@ -56,11 +56,11 @@ class Dom {
         return this.$el.getBoundingClientRect()
     }
 
-    // css(styles = {}) {
-    //     for (let s in styles) {
-    //         this.$el.style.${s} = 3
-    //     }
-    // }
+    css(styles = {}) {
+        Object.keys(styles).forEach(key => {
+            this.$el.style[key] = styles[key]
+        })
+    }
 }
 
 export function $(selector) {
