@@ -12,6 +12,10 @@ export class DomListener {
     initDomListeners() {
         this.listeners.forEach(listener => {
             const method = getMethodName(listener)
+
+            if (!this[method]) {
+                throw new Error(`Please add listener for ${getMethodName(listener)}`)
+            }
             this[method] = this[method].bind(this)
             this.$root.on(listener, this[method])
         })
