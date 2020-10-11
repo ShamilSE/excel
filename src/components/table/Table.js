@@ -22,9 +22,14 @@ export class Table extends ExcelComponent {
             const $target = $(event.target)
             const $parent = $target.closest('[data-type="resizeble"]')
             const coords = $parent.getCoords()
+
             document.onmousemove = e => {
                 const delta = e.pageX - coords.right
                 $parent.$el.style.width = coords.width + delta + 'px'
+            }
+
+            document.onmouseup = () => {
+                document.onmousemove = null
             }
         }
     }
