@@ -25,9 +25,16 @@ export class Table extends ExcelComponent {
             const cells = this.$root.findAll(`[data-column-index="${$parent.data.columnIndex}"]`)
 
             document.onmousemove = e => {
-                const delta = e.pageX - coords.right
-                $parent.$el.style.width = coords.width + delta + 'px'
-                cells.forEach(el => el.style.width = coords.width + delta + 'px')
+                if (event.target.dataset.resize == 'column') {
+                    const delta = e.pageX - coords.right
+                    const value = coords.width + delta + 'px'
+                    $parent.$el.style.width = value
+                    cells.forEach(el => el.style.width = value)
+                } else {
+                    const delta = e.pageY - coords.bottom
+                    const value = coords.height + delta + 'px'
+                    $parent.$el.style.height = value
+                }
             }
 
             document.onmouseup = () => {

@@ -55,6 +55,12 @@ class Dom {
     getCoords() {
         return this.$el.getBoundingClientRect()
     }
+
+    // css(styles = {}) {
+    //     for (let s in styles) {
+    //         this.$el.style.${s} = 3
+    //     }
+    // }
 }
 
 export function $(selector) {
