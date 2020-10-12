@@ -5,7 +5,13 @@ const CODES = {
 
 function createCell(column, row) {
     return `
-        <div class="cell" contenteditable="" data-column-index="${column}" data-id="${row}:${column}"></div>
+        <div 
+            class="cell" 
+            contenteditable="" 
+            data-column-index="${column}" 
+            data-type="cell"
+            data-id="${row}:${column}"
+        ></div>
     `
 }
 
