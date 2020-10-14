@@ -2,7 +2,7 @@ import {ExcelComponent} from "@core/ExcelComponent";
 import {createTable} from "@/components/table/table.template";
 import {resizer} from "@/components/table/ resizer";
 import {TableSelection} from "@/components/table/TableSelection";
-import {isCell, shouldResize} from "@/components/table/helpers";
+import {isCell, shouldResize, range, findNextCell} from "@/components/table/helpers";
 import {$} from "@core/dom";
 
 export class Table extends ExcelComponent {
@@ -12,7 +12,7 @@ export class Table extends ExcelComponent {
     constructor($root) {
         super($root, {
             name: 'Table',
-            listeners: ['mousedown']
+            listeners: ['mousedown', 'keydown']
         })
     }
 
@@ -27,19 +27,49 @@ export class Table extends ExcelComponent {
     init() {
         super.init()
 
-        const $cell = this.$root.find('[data-id="5:65"]')
+        const $cell = this.$root.find('[data-id="0:65"]')
         this.selection.select($cell)
     }
 
     onMousedown(event) {
+        const $target = $(event.target)
         if (shouldResize(event)) {
             resizer(this.$root, event)
+        } else if (isCell(event)) {
+            if (event.shiftKey) {
+                const startRowAddress = +event.target.dataset.id.split(':')[0]
+                const startColumnAddress = +event.target.dataset.id.split(':')[1]
+
+                document.onmouseup = (event) => {
+                    const endRowAddress = +event.target.dataset.id.split(':')[0]
+                    const endColumnAddress = +event.target.dataset.id.split(':')[1]
+
+                    const columns = range(startColumnAddress, endColumnAddress)
+                    const rows = range(startRowAddress, endRowAddress)
+
+                    const selectedCells = columns.reduce((acc, column) => {
+                        rows.forEach(row => acc.push(`${row}:${column}`))
+                        return acc
+                    }, [])
+
+                    const $cells = selectedCells.map(cell => this.$root.find(`[data-id="${cell}"]`))
+                    this.selection.selectGroup($cells)
+                    document.onmouseup = null
+                }
+            } else this.selection.select($target)
         }
+    }
 
-        else if (isCell(event)) {
-            const $target = $(event.target)
+    onKeydown(event) {
+        const keys = ['Enter', 'Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
+        console.log(event)
+        if (keys.includes(event.key) && !event.shiftKey) {
+            event.preventDefault()
 
-            this.selection.select($target)
+            const {row, column} = this.selection.idParse()
+            const nextCell = this.$root.find(findNextCell(event, {row, column}))
+            this.selection.select(nextCell)
         }
     }
 }
+

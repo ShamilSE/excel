@@ -9,6 +9,7 @@ function createCell(column, row) {
             class="cell" 
             contenteditable="" 
             data-column-index="${column}" 
+            data-row-index="${row}"
             data-type="cell"
             data-id="${row}:${column}"
         ></div>
