@@ -8,11 +8,11 @@ import {$} from "@core/dom";
 export class Table extends ExcelComponent {
     static className = 'excel__table'
 
-
-    constructor($root) {
+    constructor($root, options) {
         super($root, {
             name: 'Table',
-            listeners: ['mousedown', 'keydown']
+            listeners: ['mousedown', 'keydown'],
+            ...options
         })
     }
 
@@ -29,6 +29,10 @@ export class Table extends ExcelComponent {
 
         const $cell = this.$root.find('[data-id="0:65"]')
         this.selection.select($cell)
+
+        this.observer.subscribe('formula:input', text => {
+            console.log('text', text)
+        })
     }
 
     onMousedown(event) {
@@ -62,7 +66,6 @@ export class Table extends ExcelComponent {
 
     onKeydown(event) {
         const keys = ['Enter', 'Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
-        console.log(event)
         if (keys.includes(event.key) && !event.shiftKey) {
             event.preventDefault()
 
@@ -72,4 +75,3 @@ export class Table extends ExcelComponent {
         }
     }
 }
-
