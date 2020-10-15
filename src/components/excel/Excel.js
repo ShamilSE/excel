@@ -1,5 +1,5 @@
 import {$} from '@core/dom'
-import {Emitter, Observer} from "@core/Observer";
+import {Observer} from "@core/Observer";
 
 export class Excel {
     constructor(selector, options) {
@@ -29,5 +29,9 @@ export class Excel {
         this.$el.append(this.getRoot())
         // инициализация слушателей
         this.components.forEach(component => component.init())
+    }
+
+    destroy() {
+        this.components.forEach(component => component.destroy())
     }
 }
