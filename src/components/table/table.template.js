@@ -3,9 +3,16 @@ const CODES = {
     Z: 90,
 }
 
-function createCell(index) {
+function createCell(column, row) {
     return `
-        <div class="cell" contenteditable="" data-column-index="${index}"></div>
+        <div 
+            class="cell" 
+            contenteditable="" 
+            data-column-index="${column}" 
+            data-row-index="${row}"
+            data-type="cell"
+            data-id="${row}:${column}"
+        ></div>
     `
 }
 
@@ -40,12 +47,12 @@ export function createTable(rowsCount = 5) {
     }
     rows.push(createRow(columns.join('').trim()), null)
     // наполнение последующих строк
-    for (let i = 0; i < rowsCount; i++) {
+    for (let j = 0; j < rowsCount; j++) {
         columns = []
         for (let i = CODES.A; i < CODES.Z +1; i++) {
-            columns.push(createCell(i))
+            columns.push(createCell(i, j))
         }
-        rows.push(createRow(columns.join(''), i + 1))
+        rows.push(createRow(columns.join(''), j + 1))
     }
     return rows.join('')
 }
