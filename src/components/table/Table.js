@@ -27,6 +27,7 @@ export class Table extends ExcelComponent {
     selectCell($cell) {
         this.selection.select($cell)
         this.$emit('table:switch_cell', $cell)
+        this.$dispatch({type: '__Test__'})
     }
 
     init() {
@@ -35,6 +36,7 @@ export class Table extends ExcelComponent {
         this.selectCell(this.$root.find('[data-id="0:65"]'))
         this.$on('formula:input', text => {this.selection.current.text(text)})
         this.$on('formula:done', () => {this.selection.current.focus()})
+        this.$subscribe(state => console.log('test completed, here the state: ', state))
     }
 
     onMousedown(event) {

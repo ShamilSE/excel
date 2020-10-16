@@ -6,12 +6,14 @@ export class Excel {
         this.$el = $(selector)
         this.components = options.components || []
         this.observer = new Observer()
+        this.store = options.store
     }
 
     getRoot() {
         const $root = $.create('div', 'excel')
         const componentOptions = {
-            observer: this.observer
+            observer: this.observer,
+            store: this.store
         }
 
         this.components = this.components.map(Component => {
@@ -23,6 +25,7 @@ export class Excel {
         })
         return $root
     }
+
 
     render() {
         // инициализация html
