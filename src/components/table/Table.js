@@ -1,9 +1,10 @@
 import {ExcelComponent} from "@core/ExcelComponent";
-import {createTable} from "@/components/table/table.template";
-import {resizer} from "@/components/table/ resizer";
+import {createTable} from "@/components/table/table_template";
+import {resizer} from "@/components/table/resizer";
 import {TableSelection} from "@/components/table/TableSelection";
 import {isCell, shouldResize, range, findNextCell} from "@/components/table/helpers";
 import {$} from "@core/dom";
+import {tableResize} from "@/store/action_creators";
 
 export class Table extends ExcelComponent {
     static className = 'excel__table'
@@ -27,7 +28,6 @@ export class Table extends ExcelComponent {
     selectCell($cell) {
         this.selection.select($cell)
         this.$emit('table:switch_cell', $cell)
-        this.$dispatch({type: '__Test__'})
     }
 
     init() {
@@ -36,13 +36,21 @@ export class Table extends ExcelComponent {
         this.selectCell(this.$root.find('[data-id="0:65"]'))
         this.$on('formula:input', text => {this.selection.current.text(text)})
         this.$on('formula:done', () => {this.selection.current.focus()})
-        this.$subscribe(state => console.log('test completed, here the state: ', state))
+    }
+
+    async resizeTable(event) {
+        try {
+            const data = await resizer(this.$root, event)
+            this.$dispatch(tableResize(data))
+        } catch (e) {
+            console.warn(e.message)
+        }
     }
 
     onMousedown(event) {
         const $target = $(event.target)
         if (shouldResize(event)) {
-            resizer(this.$root, event)
+            this.resizeTable(event)
         } else if (isCell(event)) {
             if (event.shiftKey) {
                 const startRowAddress = +event.target.dataset.id.split(':')[0]

@@ -35,3 +35,10 @@ export function findNextCell(event, {row, column}) {
     }
     return `[data-id="${row}:${column}"]`
 }
+
+export function storage(key, data = null) {
+    if (!data) {
+        return JSON.parse(localStorage.getItem(key))
+    }
+    localStorage.setItem(key, JSON.stringify(data))
+}
