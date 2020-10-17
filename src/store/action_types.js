@@ -1,1 +1,0 @@
-export const COLUMN_RESIZE = 'COLUMN_RESIZE'

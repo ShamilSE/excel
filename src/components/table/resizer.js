@@ -45,7 +45,8 @@ export function resizer($root, event) {
 
             resolve({
                 value,
-                id: type === 'column' ? $parent.data.columnIndex : null
+                type,
+                id: type === 'column' ? $parent.data.columnIndex : $parent.data.rowIndex
             })
 
             $resizer.css({
