@@ -1,5 +1,5 @@
 import {ExcelComponent} from "@core/ExcelComponent";
-import {createTable} from "@/components/table/table_template";
+import {createTable} from "@/components/table/table.template";
 import {resizer} from "@/components/table/resizer";
 import {TableSelection} from "@/components/table/TableSelection";
 import {isCell, shouldResize, range, findNextCell} from "@/components/table/helpers";

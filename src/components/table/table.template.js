@@ -4,7 +4,6 @@ const CODES = {
 }
 
 const DEFAULT_WIDTH = "120px"
-const DEFAULT_HEIGHT = "24px"
 function getSize(store, direction, index) {
     return store[direction][index]
 }
