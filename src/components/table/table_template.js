@@ -3,7 +3,13 @@ const CODES = {
     Z: 90,
 }
 
-function createCell(column, row) {
+const DEFAULT_WIDTH = "120px"
+const DEFAULT_HEIGHT = "24px"
+function getSize(store, direction, index) {
+    return store[direction][index] || direction === 'colState' ? DEFAULT_WIDTH : DEFAULT_HEIGHT
+}
+
+function createCell(column, row, width) {
     return `
         <div 
             class="cell" 
@@ -12,23 +18,24 @@ function createCell(column, row) {
             data-row-index="${row}"
             data-type="cell"
             data-id="${row}:${column}"
+            style="width: ${width}"
         ></div>
     `
 }
 
-function createColumn(columns, index) {
+function createColumn(columns, index, width) {
     return `
-        <div class="column" data-type="resizeble" data-column-index="${index}">
+        <div class="column" data-type="resizeble" data-column-index="${index}" style="width: ${width}">
             ${columns}
             <div class="col-resize" data-resize="column"></div>
         </div>
     `
 }
 
-function createRow(content, index = '') {
+function createRow(content, index = '', height) {
     const resize = index ? '<div class="row-resize" data-resize="row"></div>' : ''
     return `
-        <div class="row" data-type="resizeble">
+        <div class="row" data-type="resizeble" data-row="${index}" style="height: ${height}">
             <div class="row-info">
                 ${index}
                 ${resize}
@@ -38,21 +45,28 @@ function createRow(content, index = '') {
     `
 }
 
-export function createTable(rowsCount = 5) {
+export function createTable(rowsCount = 5, store) {
     const rows = []
     let columns = []
+    let width
+    // let height
+
     // наполнение первой строки
     for (let i = CODES.A; i < CODES.Z +1; i++) {
-        columns.push(createColumn(String.fromCharCode(i), i))
+        width = getSize(store, 'colState', i)
+        columns.push(createColumn(String.fromCharCode(i), i, width))
     }
     rows.push(createRow(columns.join('').trim()), null)
     // наполнение последующих строк
     for (let j = 0; j < rowsCount; j++) {
         columns = []
         for (let i = CODES.A; i < CODES.Z +1; i++) {
-            columns.push(createCell(i, j))
+            //
+            width = getSize(store, 'colState', i)
+            columns.push(createCell(i, j, width))
         }
-        rows.push(createRow(columns.join(''), j + 1))
+        // height =
+        rows.push(createRow(columns.join(''), j + 1, ))
     }
     return rows.join('')
 }

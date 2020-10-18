@@ -1,4 +1,4 @@
-import {COLUMN_RESIZE} from "@/store/action_types";
+import {COLUMN_RESIZE} from "@/store/actionTypes";
 
 export function tableResize(data) {
     return {

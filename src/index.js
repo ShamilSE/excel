@@ -4,14 +4,14 @@ import {Toolbar} from "@/components/toolbar/Toolbar";
 import {Formula} from "@/components/formula/Formula";
 import {Table} from "@/components/table/Table";
 import {Excel} from "@/components/excel/Excel";
-import {create_store} from "@/store/create_store";
-import {root_reducer} from "@/store/root_reducer";
+import {createStore} from "@/store/createStore";
+import {rootReducer} from "@/store/rootReducer";
 import {storage} from "@/components/table/helpers";
+import {initialState} from "@/store/initialState";
 
-const store = create_store(root_reducer, storage('excel-table'))
+const store = createStore(rootReducer, initialState)
 
 store.subscribe( state => {
-    console.log(state)
     storage('excel-table', state)
 })
 
