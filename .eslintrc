@@ -7,7 +7,6 @@
     },
     "extends": "eslint:recommended",
     "rules": {
-        "no-unused-vars": "warn",
-        "no-extra-boolean-cast": "off"
+        "no-unused-vars": "warn"
     }
 }

@@ -1,10 +1,10 @@
 import {ExcelComponent} from "@core/ExcelComponent";
-import {createTable} from "@/components/table/table.template";
+import {createTable} from "@/components/table/table_template";
 import {resizer} from "@/components/table/resizer";
 import {TableSelection} from "@/components/table/TableSelection";
 import {isCell, shouldResize, range, findNextCell} from "@/components/table/helpers";
 import {$} from "@core/dom";
-import {tableResize} from "@/store/actionCreators";
+import {tableResize} from "@/store/action_creators";
 
 export class Table extends ExcelComponent {
     static className = 'excel__table'
@@ -18,7 +18,7 @@ export class Table extends ExcelComponent {
     }
 
     toHTML() {
-        return createTable(40, this.store.getState())
+        return createTable(40)
     }
 
     prepare() {
