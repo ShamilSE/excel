@@ -6,7 +6,7 @@ const CODES = {
 const DEFAULT_WIDTH = "120px"
 const DEFAULT_HEIGHT = "24px"
 function getSize(store, direction, index) {
-    return store[direction][index] || direction === 'colState' ? DEFAULT_WIDTH : DEFAULT_HEIGHT
+    return store[direction][index]
 }
 
 function createCell(column, row, width) {
@@ -49,11 +49,11 @@ export function createTable(rowsCount = 5, store) {
     const rows = []
     let columns = []
     let width
-    // let height
+    let height
 
     // наполнение первой строки
     for (let i = CODES.A; i < CODES.Z +1; i++) {
-        width = getSize(store, 'colState', i)
+        width = getSize(store, 'colState', i) || DEFAULT_WIDTH
         columns.push(createColumn(String.fromCharCode(i), i, width))
     }
     rows.push(createRow(columns.join('').trim()), null)
@@ -62,11 +62,11 @@ export function createTable(rowsCount = 5, store) {
         columns = []
         for (let i = CODES.A; i < CODES.Z +1; i++) {
             //
-            width = getSize(store, 'colState', i)
+            width = getSize(store, 'colState', i) || DEFAULT_WIDTH
             columns.push(createCell(i, j, width))
         }
-        // height =
-        rows.push(createRow(columns.join(''), j + 1, ))
+        height = getSize(store, 'rowState', j + 1)
+        rows.push(createRow(columns.join(''), j + 1, height))
     }
     return rows.join('')
 }
